@@ -1,0 +1,11 @@
+[user]
+	name = Valentin Grimaldi
+	email = valentin.grimaldi@outlook.com
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        lge = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an %ae>%Creset' --abbrev-commit
+[core]
+	excludesfile = ~/.gitignore-global
+	editor = emacs -nw
+[color]
+	ui = auto
