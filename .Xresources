@@ -1,0 +1,3 @@
+#include ".Xresources.d/fonts.Xresources"
+#include ".Xresources.d/colors.Xresources"
+#include ".Xresources.d/urxvt.Xresources"

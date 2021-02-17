@@ -1,0 +1,4 @@
+URxvt*.font: xft:Iosevka:style=Regular:size=10
+URxvt*.boldFont: xft:Iosevka:style=Bold:size=10
+URxvt*.italicFont: xft:Iosevka:style=Italic:size=10
+URxvt*.boldItalicFont: xft:Iosevka:style=Bold Italic:size=10
