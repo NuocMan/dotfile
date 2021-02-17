@@ -8,7 +8,7 @@ export ZSH="/home/nuocman/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="steeef"
+ZSH_THEME="pi"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -86,9 +86,6 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='mvim'
 # fi
 
-export EDITOR='emacs'
-export TERM='xterm-256color'
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -103,5 +100,4 @@ export TERM='xterm-256color'
 alias s="cd .."
 alias ne="/usr/bin/emacs -nw"
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
-alias sudo="sudo "
 alias clean="{ rm -v *#; rm -v *~; rm -v .*#; rm -v .*~; } 2> /dev/null;"
