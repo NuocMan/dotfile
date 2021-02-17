@@ -1,3 +1,5 @@
+;;; emacs.el --- This is Valentin Grimaldi Emacs config files
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)

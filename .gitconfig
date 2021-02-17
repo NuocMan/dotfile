@@ -9,3 +9,5 @@
 	editor = emacs -nw
 [color]
 	ui = auto
+[init]
+	defaultBranch = master

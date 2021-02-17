@@ -24,4 +24,6 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(global-unset-key (kbd "C-z"))
+
 (windmove-default-keybindings 'meta)
