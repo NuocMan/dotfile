@@ -1,7 +1,7 @@
 ;;; emacs.el --- This is Valentin Grimaldi Emacs config files
 (menu-bar-mode -1)
-;;;(toggle-scroll-bar -1)
-;;;(tool-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
 (setq inhibit-startup-screen t)
 (xterm-mouse-mode t)
 
@@ -60,6 +60,10 @@
   :after ivy
   :bind (("C-s" . swiper)
 	 ("C-r" . swiper)))
+
+(use-package rainbow-delimiters
+  :ensure t)
+
 
 
 ;;; Config files
