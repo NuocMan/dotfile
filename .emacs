@@ -1,11 +1,25 @@
 ;;; emacs.el --- This is Valentin Grimaldi Emacs config files
+;;; Commentary:
+
+;;; Code: Frame config
+
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (setq inhibit-startup-screen t)
 (xterm-mouse-mode t)
+(global-hl-line-mode 1)
+(global-display-line-numbers-mode)
+(setq require-final-newline 'ask)
 
 ;;; Package configs
+
+(setq-default c-basic-offset 2)
+(setq c-default-style
+      '((c-mode . "bsd")
+	(java-mode . "java")
+	(awk-mode . "awk")
+	(other . "gnu")))
 
 (require 'package)
 
@@ -45,16 +59,6 @@
   (ivy-use-virtual-buffers t)
   :config (ivy-mode))
 
-;; (use-package ivy-rich
-;;   :after ivy
-;;   :custom
-;;   (ivy-virtual-abbreviate 'full
-;; 			  ivy-rich-switch-buffer-align-virtual-buffer t
-;; 			  ivy-rich-path-style 'abbrev)
-;;   :config
-;;   (ivy-set-display-transformer 'ivy-switch-buffer
-;; 			       'ivy-rich-switch-buffer-transformer))
-
 (use-package swiper
   :ensure t
   :after ivy
@@ -62,9 +66,34 @@
 	 ("C-r" . swiper)))
 
 (use-package rainbow-delimiters
-  :ensure t)
+  :ensure t
+  :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package expand-region
+  :ensure t
+  :bind ("M-m" . er/expand-region))
 
+(use-package irony
+  :ensure t
+  :hook ((c++-mode . irony-mode)
+	 (c-mode . irony-mode)))
+
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :hook ((prog-mode . global-company-mode)
+	 (irony-mode . irony-cdb-autosetup-compile-options)))
+
+(use-package company-irony
+  :ensure t
+  :after (company irony)
+  :config (add-to-list 'company-backends 'company-irony))
+
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;;; Config files
 
@@ -75,4 +104,3 @@
 (put 'downcase-region 'disabled nil)
 
 (load-file "~/.emacs.d/bindings.el")
-(load-file "~/.emacs.d/hooks.el")
