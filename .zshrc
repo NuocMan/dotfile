@@ -68,7 +68,7 @@ ZSH_THEME="pi"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitignore colored-man-pages systemd emacs docker)
+plugins=(git gitignore colored-man-pages systemd emacs docker direnv cargo)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,3 +101,5 @@ alias s="cd .."
 alias ne="/usr/bin/emacs -nw"
 alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias clean="{ rm -v *#; rm -v *~; rm -v .*#; rm -v .*~; } 2> /dev/null;"
+
+export TERM=st-direct
