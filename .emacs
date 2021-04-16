@@ -7,6 +7,8 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (setq inhibit-startup-screen t)
+
+(normal-erase-is-backspace-mode)
 (xterm-mouse-mode t)
 (global-hl-line-mode 1)
 (global-display-line-numbers-mode)
@@ -73,21 +75,26 @@
   :ensure t
   :bind ("M-m" . er/expand-region))
 
-(use-package irony
-  :ensure t
-  :hook ((c++-mode . irony-mode)
-	 (c-mode . irony-mode)))
-
 (use-package company
   :ensure t
   :diminish company-mode
   :hook ((prog-mode . global-company-mode)
 	 (irony-mode . irony-cdb-autosetup-compile-options)))
 
+(use-package irony
+  :ensure t
+  :hook ((c++-mode . irony-mode)
+	 (c-mode . irony-mode)))
+
 (use-package company-irony
   :ensure t
   :after (company irony)
   :config (add-to-list 'company-backends 'company-irony))
+
+(use-package company-jedi
+  :ensure t
+  :after company
+  :config (add-to-list 'company-backends 'company-jedi))
 
 (use-package flycheck
   :ensure t
@@ -95,12 +102,31 @@
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
+(use-package auto-virtualenvwrapper
+  :ensure t
+  :hook (python-mode . auto-virtualenvwrapper-activate))
+
 ;;; Config files
 
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file)
 
+;;; Bindings
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-(load-file "~/.emacs.d/bindings.el")
+(global-set-key (kbd "<mouse-4>")
+		'(lambda ()
+		   (interactive)
+		   (scroll-down 1)))
+(global-set-key (kbd "<mouse-5>")
+		'(lambda ()
+		   (interactive)
+		   (scroll-up 1)))
+
+(global-set-key (kbd "C-c x") 'compile)
+(global-set-key (kbd "C-c c") 'recompile)
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(windmove-default-keybindings 'meta)
