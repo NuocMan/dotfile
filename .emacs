@@ -1,7 +1,8 @@
-;;; emacs.el --- This is Valentin Grimaldi Emacs config files
-;;; Commentary:
+;;; emacs.el --- Emacs configuration file
 
-;;; Code: Frame config
+;;; Commentary:
+;; This is Valentin Grimaldi Emacs config files
+;;; Code:
 
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
@@ -17,7 +18,7 @@
 ;;; Package configs
 
 (setq-default c-basic-offset 2)
-(setq c-default-style
+(setq-default c-default-style
       '((c-mode . "bsd")
 	(java-mode . "java")
 	(awk-mode . "awk")
@@ -130,3 +131,14 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (windmove-default-keybindings 'meta)
+
+(global-unset-key (kbd "C-z"))
+
+(global-set-key (kbd "C-z") 'my-suspend-frame)
+
+(defun my-suspend-frame ()
+  "In a GUI environment, do nothing; otherwise `suspend-frame'."
+  (interactive)
+  (if (display-graphic-p)
+      (message "suspend-frame disabled for graphical displays.")
+    (suspend-frame)))
