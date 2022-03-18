@@ -1,0 +1,1 @@
+/home/nuocman/.config/polybar/themes/nuocman/launch.sh
