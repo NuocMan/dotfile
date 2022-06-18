@@ -2,19 +2,22 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+
+bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9 10
 
 bspc config border_width         2
-bspc config window_gap          2
+bspc config window_gap           2
 
 bspc config split_ratio          0.52
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
+bspc rule -a Spotify desktop='^9' state=tiled
 bspc rule -a Emacs desktop='^1' state=tiled
-bspc rule -a Firefox desktop='^2'
+#bspc rule -a Firefox desktop='^2'
 
-~/.scripts/spotify/launchlistener.sh &
-~/.config/polybar/launch.sh
-~/.oh-my-zsh/plugins/emacs/emacsclient.sh --no-wait
-~/.fehbg
+~/.config/polybar/launch.sh 2&>1
+/usr/bin/cmst -w5 -m
+/usr/bin/dunst &
+# /usr/bin/spotify --log-file=$(mktemp --suffix=-spotify-$(date +'%d-%m-%Y')).log &
+#~/.oh-my-zsh/plugins/emacs/emacsclient.sh --no-wait
