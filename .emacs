@@ -12,7 +12,9 @@
 (normal-erase-is-backspace-mode)
 (xterm-mouse-mode t)
 (global-hl-line-mode 1)
-(global-display-line-numbers-mode)
+;;(global-display-line-numbers-mode)
+(setq column-number-mode t)
+
 (setq require-final-newline 'ask)
 
 ;;; Package configs
@@ -45,6 +47,9 @@
 (use-package doom-modeline
   :ensure t
   :config (doom-modeline-mode t))
+
+(use-package all-the-icons
+  :ensure t)
 
 (use-package counsel
   :ensure t
@@ -106,6 +111,29 @@
 (use-package auto-virtualenvwrapper
   :ensure t
   :hook (python-mode . auto-virtualenvwrapper-activate))
+
+(use-package kubernetes
+  :ensure t
+  :commands (kubernetes-overview)
+  :config
+  (setq kubernetes-poll-frequency 3600
+        kubernetes-redraw-frequency 3600))
+(fset 'k8s 'kubernetes-overview)
+
+(use-package yaml-mode
+  :ensure t)
+
+(use-package dockerfile-mode
+  :ensure t)
+
+(use-package kotlin-mode
+  :ensure t)
+
+(use-package groovy-mode
+  :ensure t)
+
+(use-package gradle-mode
+  :ensure t)
 
 ;;; Config files
 
