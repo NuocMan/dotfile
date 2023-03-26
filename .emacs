@@ -106,7 +106,7 @@
   :ensure t
   :diminish flycheck-mode
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (add-hook 'after-init-hook 'global-flycheck-mode))
 
 (use-package auto-virtualenvwrapper
   :ensure t
@@ -135,6 +135,10 @@
 (use-package gradle-mode
   :ensure t)
 
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e/")
+(use-package mu4e)
+(setq mu4e-get-mail-command "mbsync gmail")
+
 ;;; Config files
 
 (setq custom-file "~/.emacs-custom.el")
@@ -145,11 +149,11 @@
 (put 'downcase-region 'disabled nil)
 
 (global-set-key (kbd "<mouse-4>")
-		'(lambda ()
+		#'(lambda ()
 		   (interactive)
 		   (scroll-down 1)))
 (global-set-key (kbd "<mouse-5>")
-		'(lambda ()
+		#'(lambda ()
 		   (interactive)
 		   (scroll-up 1)))
 

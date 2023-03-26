@@ -77,7 +77,7 @@ ZSH_THEME="pi"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitignore colored-man-pages systemd emacs docker direnv)
+plugins=(git gitignore colored-man-pages systemd docker direnv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -105,6 +105,9 @@ alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias clean="{ rm -v *#; rm -v *~; rm -v .*#; rm -v .*~; } 2> /dev/null;"
 
 export TERM=st-direct
+export CHROME_EXECUTABLE=/usr/bin/chromium
+export VISUAL=/usr/bin/emacs
+export EDITOR="/usr/bin/emacs -nw"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

@@ -16,8 +16,9 @@ bspc rule -a Spotify desktop='^9' state=tiled
 bspc rule -a Emacs desktop='^1' state=tiled
 #bspc rule -a Firefox desktop='^2'
 
-~/.config/polybar/launch.sh 2&>1
+~/.config/polybar/launch.sh --shapes 2&>1 /tmp/log_polybar
+# Connman
 /usr/bin/cmst -w5 -m
+# Notifications
 /usr/bin/dunst &
-# /usr/bin/spotify --log-file=$(mktemp --suffix=-spotify-$(date +'%d-%m-%Y')).log &
 #~/.oh-my-zsh/plugins/emacs/emacsclient.sh --no-wait

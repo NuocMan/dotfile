@@ -57,7 +57,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id rofi -show drun -eh 2 -bw 0
 
 bindsym $mod+l exec --no-startup-id dm-tool lock
-bindsym $mod+Shift+s exec --no-startup-id maim -s -u | xclip -selection clipboard -t image/png -i
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui
 
 # change focus
 # bindsym $mod+j focus left
@@ -186,6 +186,9 @@ hide_edge_borders both
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
+exec --no-startup-id cmst -m -w 4 &
+exec --no-startup-id i3-battery-popup
+
 # class                 border  backgr. text    indicator
 client.focused          #5d4d7a #5d4d7a #FFFFFF #2E9EF4
 client.focused_inactive #333333 #5F676A #FFFFFF #484E50
@@ -195,3 +198,5 @@ client.placeholder      #000000 #0C0C0C #FFFFFF #000000
 
 assign [class="Thunderbird"] $ws10
 assign [class="Emacs"] $ws1
+assign [class="Code"] $ws1
+for_window [title="Battery Warning"] sticky enable
