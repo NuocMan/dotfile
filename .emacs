@@ -122,6 +122,32 @@
 (use-package groovy-mode)
 (use-package gradle-mode)
 
+(use-package company
+	:hook (eglot-managed-mode . company-mode))
+
+(use-package eglot
+  :hook (((c-mode
+					 cc-mode
+					 sh-mode
+					 dockerfile-mode
+					 sql-mode
+					 js-mode
+					 typescript-ts-mode
+					 java-mode
+					 kotlin-mode) . eglot-ensure))
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-events-buffer-size 0)
+  (eglot-extend-to-xref nil)
+  (eglot-ignored-server-capabilities
+   '(:hoverProvider
+     :documentHighlightProvider
+     :documentFormattingProvider
+     :documentRangeFormattingProvider
+     :documentOnTypeFormattingProvider
+     :colorProvider
+     :foldingRangeProvider)))
+
 (defun my-suspend-frame ()
   "In a GUI environment, do nothing; otherwise `suspend-frame'."
   (interactive)
