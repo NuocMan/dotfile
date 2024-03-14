@@ -1,3 +1,0 @@
-[submodule ".config/polybar/themes"]
-	path = .config/polybar/themes
-	url = git@github.com:NuocMan/polybar-themes.git
