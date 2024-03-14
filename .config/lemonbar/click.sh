@@ -1,5 +1,8 @@
 #!/bin/bash
 
+brightnessUPCounter=0
+brightnessDOWNCounter=0
+
 while read -r line; do
 		case $line in
 				desktop-*)
@@ -15,6 +18,23 @@ while read -r line; do
 						;;
 				volume)
 						pactl set-sink-mute 0 toggle
+						;;
+				brightnessUP)
+						if (( brightnessUPCounter++ > 5 )); then
+								xbacklight -inc 10
+								brightnessUPCounter=0
+						fi
+						brightnessDOWNCounter=0
+						;;
+				brightnessDOWN)
+						if (( brightnessDOWNCounter++ > 5 )); then
+								# Avoid to set backlight to 0
+								if (( $(xbacklight -get) > 10  )); then
+										xbacklight -dec 10
+								fi
+								brightnessDOWNCounter=0
+						fi
+						brightnessUPCounter=0
 						;;
 				*)
 						echo "Can't process command '${line}'" >&2
