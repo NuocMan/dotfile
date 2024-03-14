@@ -29,6 +29,7 @@
   (toggle-scroll-bar -1)
 	(setq global-hl-line-mode 1)
   (tool-bar-mode -1)
+	(column-number-mode 1)
   (setq inhibit-startup-screen t)
   (setq require-final-newline 'ask)
 	(global-hl-line-mode 1)
@@ -47,6 +48,7 @@
 	(windmove-default-keybindings 'meta))
 
 (use-package editorconfig
+	:ensure editorconfig
 	:config (editorconfig-mode t))
 
 (use-package cc-vars
