@@ -4,28 +4,28 @@ $username\
 $hostname\
 $directory\
 $git_branch\
-$cmd_duration\
 $git_state\
 $git_status\
-[ ❯ ](purple)\
+$cmd_duration\
+[❯ ](purple)\
 """
 
 add_newline = false
 
 [directory]
-style = "blue"
+style = "bold blue"
 
 [character]
-success_symbol = "[π](bold fg:green)"
-error_symbol = "[π](bold fg:red)"
-vimcmd_symbol = "[❮](green)"
+success_symbol = "[ π](bold fg:green)"
+error_symbol = "[ π](bold fg:red)"
+vimcmd_symbol = "[ ❮](green)"
 
 [git_branch]
-format = "[$branch]($style)"
+format = "[$branch ]($style)"
 style = "bold green"
 
 [git_status]
-format = "[[( ✗$conflicted$untracked$modified$staged$renamed$deleted)]($style)($ahead_behind$stashed)]($style)"
+format = "[[(✗ $conflicted$untracked$modified$staged$renamed$deleted)]($style)($ahead_behind$stashed )]($style)"
 style = "bold yellow"
 conflicted = "​"
 untracked = "​"
@@ -40,5 +40,5 @@ format = '\([$state( $progress_current/$progress_total)]($style)\)'
 style = "bright-black"
 
 [cmd_duration]
-format = "[$duration]($style) "
+format = "[$duration ]($style)"
 style = "yellow"
