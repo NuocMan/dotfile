@@ -1,9 +1,15 @@
 #!/bin/bash
 
-theme="nord"
+theme="spacemacs"
 
 case $theme in
-    "dracula")
+    spacemacs)
+        color_bg="#353b45"
+        color_fg="#abb2bf"
+        color_hl1='#5d4d7a'
+        color_hl2="#373040"
+        ;;
+    dracula)
         color_bg="#282a36"
         color_fg="#f8f8f2"
         color_hl1="#6272a4"
@@ -42,7 +48,7 @@ bspc_desktops() {
         if [[ "$(bspc query -D -d focused --names)" == "${d}" ]]; then
             buf="${buf} %{B${color_hl2}} %{A:desktop-${d}:} ${d} %{A} %{B-}"
         else
-            buf="${buf} %{A:desktop-${d}:} ${d} %{A} "
+            buf="${buf}  %{A:desktop-${d}:} ${d} %{A} "
         fi
     done
 

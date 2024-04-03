@@ -36,6 +36,12 @@ while read -r line; do
 						fi
 						brightnessUPCounter=0
 						;;
+				desktopUP)
+						bspc desktop -f "$(bspc query -D -d next)"
+						;;
+				desktopDOWN)
+						bspc desktop -f "$(bspc query -D -d prev)"
+						;;
 				*)
 						echo "Can't process command '${line}'" >&2
 						;;

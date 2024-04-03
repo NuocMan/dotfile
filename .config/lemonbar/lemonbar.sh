@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -x
 cd $(dirname -- $0)
 
 export PATH="$PWD:$PATH"
