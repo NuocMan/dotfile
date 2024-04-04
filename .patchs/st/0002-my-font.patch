@@ -1,0 +1,29 @@
+From 24a669c8209624ab6129e6c01d2aaa1f34c1a0bd Mon Sep 17 00:00:00 2001
+From: Valentin Grimaldi <valentin.grimaldi@outlook.com>
+Date: Thu, 4 Apr 2024 22:09:57 +0200
+Subject: [PATCH 2/2] my font
+
+---
+ config.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/config.h b/config.h
+index c86daa3..0f15f23 100644
+--- a/config.h
++++ b/config.h
+@@ -5,8 +5,10 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "mono:pixelsize=12:antialias=true:autohint=true";
+-static char *font2[] = { "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true" };
++static char *font = "Roboto Mono:style=Regular:size=9:antialias=true:autohint=true";
++static char *font2[] = {
++	"Symbols Nerd Font Mono:size=9:antialias=true:autohint=true"
++};
+ static int borderpx = 2;
+ 
+ /*
+-- 
+2.44.0
+
