@@ -1,4 +1,4 @@
-*.font: Roboto Mono:style=Regular:size=10
-*.boldFont: Roboto Mono:style=Bold:size=10
-*.italicFont: Roboto Mono:style=Italic:size=10
-*.boldItalicFont: Roboto Mono:style=Bold Italic:size=10
+*.font: Roboto Mono:style=Regular:size=9
+*.boldFont: Roboto Mono:style=Bold:size=9
+*.italicFont: Roboto Mono:style=Italic:size=9
+*.boldItalicFont: Roboto Mono:style=Bold Italic:size=9
