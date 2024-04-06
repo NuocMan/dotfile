@@ -120,13 +120,29 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-#Volume Control
+# Volume Control
 XF86AudioLowerVolume
-	amixer set Master 5%-
+	pactl set-sink-mute 0 false; \
+	pactl set-sink-volume 0 -5%
 XF86AudioRaiseVolume
-	amixer set Master 5%+
+	pactl set-sink-mute 0 false; \
+	pactl set-sink-volume 0 +5%
 XF86AudioMute
-        amixer set Master toggle
+	pactl set-sink-mute 0 toggle
+
+# Brightness Control
+XF86MonBrightnessUp
+	xbacklight -inc 10
+XF86MonBrightnessDown
+	xbacklight -dec 10
+
+# Media Control
+XF86AudioNext
+	playerctl next
+XF86AudioPrev
+	playerctl previous
+XF86AudioPlay
+	playerctl play-pause
 
 #
 # My soft
