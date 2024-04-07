@@ -6,7 +6,7 @@ cd $(dirname -- $0)
 . ./common.sh
 
 desktop="$(bspc_desktops)"
-
+mpris_metadata="$(mpris_metadata)"
 while read -r line; do
     case $line in
         DAT*)
@@ -16,17 +16,22 @@ while read -r line; do
             desktop="${line#???}"
             ;;
         BRI*)
-            brightness="${BRIGHTNESS} ${line#???}"
+            brightness="%{A4:brightnessUP:}%{A5:brightnessDOWN:} ${BRIGHTNESS} ${line#???} %{A}%{A}"
             ;;
         VOL*)
-            volume="${line#???}"
+            volume="%{A:volume:}%{A4:volumeUP:}%{A5:volumeDOWN:} ${line#???} %{A}%{A}%{A}"
             ;;
         BAT*)
             battery="${line#???}"
             ;;
+        MPR*)
+            mpris_metadata="${line#???}"
+            readarray -td';' mpris_array < <(printf '%s' "$mpris_metadata")
+            mpris="%{A:prevMpris:}${MPRIS_PREV}%{A} ${MPRIS_PLAY} %{A:nextMpris:}${MPRIS_NEXT}%{A} ${mpris_array[2]} - ${mpris_array[0]}"
+            ;;
         *)
-						;;
+            ;;
     esac
 
-    echo -e "%{l}${date}${desktop}%{r} %{A4:brightnessUP:}%{A5:brightnessDOWN:} ${brightness} %{A}%{A}  %{A:volume:}%{A4:volumeUP:}%{A5:volumeDOWN:} ${volume} %{A}%{A}%{A} ${battery}    "
+    echo -e "%{l}${date}${desktop}%{r} ${mpris} ${brightness}  ${volume} ${battery}    "
 done

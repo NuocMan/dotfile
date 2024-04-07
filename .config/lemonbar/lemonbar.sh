@@ -25,17 +25,20 @@ volume.sh "$fifo" &
 # Battery
 battery.sh "$fifo" &
 
+# MPRIS
+mpris.sh "$fifo" &
+
 WIDTH=
 HEIGHT=30
 XOFFSET=0
 YOFFSET=0
 
 tail -f $fifo | parser.sh | lemonbar \
-	-p \
-	-g "${WIDTH}x${HEIGHT}+${XOFFSET}+${YOFFSET}" \
-	-B "${color_bg}" \
-	-F "${color_fg}" \
- 	-f 'icomoon\-feather:style=Regular' \
-	-f "Roboto Mono,Roboto Mono Medium:style=Medium,Regular" \
-	-a 100 | click.sh
-
+    -p \
+    -g "${WIDTH}x${HEIGHT}+${XOFFSET}+${YOFFSET}" \
+    -B "${color_bg}" \
+    -F "${color_fg}" \
+    -f "Symbols Nerd Font Mono" \
+    -f "Roboto Mono,Roboto Mono Medium:style=Medium,Regular" \
+    -f "Noto Sans Mono CJK JP" \
+    -a 100 | click.sh

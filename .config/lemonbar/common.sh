@@ -23,27 +23,37 @@ case $theme in
         ;;
 esac
 
-VOL_LO="\uE9FA"
-VOL_MI="\uE9FB"
-VOL_HI="\uE9FC"
-VOL_OFF="\uE9FD"
+VOL_LO="\Uf057f"
+VOL_MI="\Uf0580"
+VOL_HI="\Uf1120"
+VOL_OFF="\Uf075f"
 
-BAT_USE="\ue91c"
-BAT_POW="\ue91d"
+BAT_CRIT="\Uf0083"
+BAT_10="\Uf007a"
+BAT_20="\Uf007b"
+BAT_30="\Uf007c"
+BAT_40="\Uf007d"
+BAT_50="\Uf007e"
+BAT_60="\Uf007f"
+BAT_70="\Uf0080"
+BAT_80="\Uf0081"
+BAT_90="\Uf0082"
+BAT_FULL="\Uf007a"
+BAT_PERC=($BAT_CRIT $BAT_10 $BAT_20 $BAT_30 $BAT_40 $BAT_50 $BAT_60 $BAT_70 $BAT_80 $BAT_90 $BAT_FULL)
+BAT_POW="\Uf0084"
 
-NW_OFF="\uea00"
-NW_ON="\ue9ff"
+BRIGHTNESS="\Uf00df"
 
-BRIGHTNESS="\ue9d7"
+CLOCK="\Uf0150"
 
-CLOCK="\uE939"
+MPRIS_PREV="\Uf0f28"
+MPRIS_PLAY="\Uf0f1b"
+MPRIS_PAUSE="\Uf03e4"
+MPRIS_NEXT="\Uf0f27"
 
-DISK="\uE951"
-
-
-bspc_desktops() {
-    desktops=$(bspc query -D --names)
-    buf=""
+function bspc_desktops() {
+    local desktops=$(bspc query -D --names)
+    local buf=""
     for d in ${desktops[@]}; do
         if [[ "$(bspc query -D -d focused --names)" == "${d}" ]]; then
             buf="${buf} %{B${color_hl2}} %{A:desktop-${d}:} ${d} %{A} %{B-}"
@@ -53,4 +63,27 @@ bspc_desktops() {
     done
 
     echo "${buf}"
+}
+
+TRACK_ID=trackid
+LENGTH=length
+ART_URL=artUrl
+ALBUM=album
+ALBUM_ARTIST=albumArtist
+ARTIST=artist
+AUTO_RATING=autoRating
+DISC_NUMBER=discNumber
+TITLE=title
+TRACK_NUMBER=trackNumber
+URL=url
+
+function mpris_metadata() {
+    local -A metadata
+    while read -r line; do
+        [[ ! "$line" =~ ^spotify\ .*$ ]] && continue
+        line=${line#*\:}
+        metadata[${line%% *}]=${line##*  } #might be a bit stupid
+    done < <(playerctl metadata)
+
+    echo "${metadata[${TITLE}]};${metadata[${ALBUM}]};${metadata[${ARTIST}]}"
 }
