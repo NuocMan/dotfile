@@ -1,22 +1,24 @@
 #!/bin/bash
 
-set -e
+set -x
 cd $(dirname -- $0)
 
 . ./common.sh
 
 desktop="$(bspc_desktops)"
-mpris_metadata="$(mpris_metadata)"
-while read -r line; do
+OLD_IFS=$IFS
+
+while IFS=$'\n' read -r line; do
+    IFS=$OLD_IFS
     case $line in
         DAT*)
-            date="%{B${color_hl1}} ${CLOCK} ${line#???}   %{B-}"
+            date="%{B${color_hl1}} ${CLOCK} ${line#???} %{B-}"
             ;;
         DES*)
             desktop="${line#???}"
             ;;
         BRI*)
-            brightness="%{A4:brightnessUP:}%{A5:brightnessDOWN:} ${BRIGHTNESS} ${line#???} %{A}%{A}"
+            brightness="%{A4:brightnessUP:}%{A5:brightnessDOWN:} ${line#???}${BRIGHTNESS} %{A}%{A}"
             ;;
         VOL*)
             volume="%{A:volume:}%{A4:volumeUP:}%{A5:volumeDOWN:} ${line#???} %{A}%{A}%{A}"
@@ -25,13 +27,11 @@ while read -r line; do
             battery="${line#???}"
             ;;
         MPR*)
-            mpris_metadata="${line#???}"
-            readarray -td';' mpris_array < <(printf '%s' "$mpris_metadata")
-            mpris="%{A:prevMpris:}${MPRIS_PREV}%{A} ${MPRIS_PLAY} %{A:nextMpris:}${MPRIS_NEXT}%{A} ${mpris_array[2]} - ${mpris_array[0]}"
+            mpris="${line#???} ${SPOTIFY} %{A:prevMpris:}${MPRIS_PREV}%{A} ${MPRIS_PLAY} %{A:nextMpris:}${MPRIS_NEXT}%{A}"
             ;;
         *)
             ;;
     esac
 
-    echo -e "%{l}${date}${desktop}%{r} ${mpris} ${brightness}  ${volume} ${battery}    "
+    echo -e "%{l}${date}${desktop}%{r} ${mpris} ${brightness} ${volume} ${battery} "
 done
