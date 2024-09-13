@@ -22,6 +22,10 @@
     "Open Emacs settings."
     (interactive)
     (find-file (concat "~/" ".emacs")))
+	(defun nuoc/edit-dotfile ()
+		"Open dotfile bare repository"
+		(interactive)
+		(magit-status "~/.cfg"))
   :config
 	(setq ring-bell-function 'ignore)
   (setq-default tab-width 2)
@@ -61,6 +65,9 @@
                           (c-mode    . "bsd")
                           (other     . "gnu")))
   (setq-default c-basic-offset 2))
+
+(use-package treemacs
+	:bind ("C-c C-f" . treemacs))
 
 (use-package doom-modeline
   :init
@@ -128,15 +135,10 @@
 	:hook (eglot-managed-mode . company-mode))
 
 (use-package eglot
-  :hook (((c-mode
-					 cc-mode
-					 sh-mode
-					 dockerfile-mode
-					 sql-mode
-					 js-mode
-					 typescript-ts-mode
-					 java-mode
-					 kotlin-mode) . eglot-ensure))
+  :hook ((java-mode
+					c-mode
+					cpp-mode
+					javascript-mode) . eglot-ensure)
   :custom
   (eglot-autoshutdown t)
   (eglot-events-buffer-size 0)
@@ -149,6 +151,15 @@
      :documentOnTypeFormattingProvider
      :colorProvider
      :foldingRangeProvider)))
+
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+;; (setq default-frame-alist '((font . "RobotoMono Nerd Font-9")))
 
 (defun my-suspend-frame ()
   "In a GUI environment, do nothing; otherwise `suspend-frame'."
