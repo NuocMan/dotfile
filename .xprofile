@@ -1,6 +1,6 @@
 #!/bin/sh
 
-WALLPAPER="$HOME/Pictures/wallpapers/wallpaper"
+WALLPAPER="$HOME/.wallpaper"
 [ -f "$WALLPAPER" ] && feh --bg-scale "$WALLPAPER"
 which emacs && {
   emacs --daemon
