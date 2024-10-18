@@ -150,3 +150,6 @@ XF86AudioPlay
 
 super + shift + s
 	flameshot gui
+
+super + semicolon
+	rofimoji

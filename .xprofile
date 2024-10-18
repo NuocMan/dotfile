@@ -1,4 +1,11 @@
 #!/bin/sh
 
-[[ -f ~/.config/zsh/.zshenv ]] && source ~/.config/zsh/.zshenv
-export TERMINAL=urxvt
+WALLPAPER="$HOME/Pictures/wallpapers/wallpaper"
+[ -f "$WALLPAPER" ] && feh --bg-scale "$WALLPAPER"
+which emacs && {
+  emacs --daemon
+  export VISUAL="emacs"
+}
+which firefox && {
+  export BROWSER="firefox"
+}
