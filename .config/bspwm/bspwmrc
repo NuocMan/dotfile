@@ -16,8 +16,8 @@ bspc rule -a Spotify desktop='^9' state=tiled
 bspc rule -a Emacs desktop='^1' state=tiled
 #bspc rule -a Firefox desktop='^2'
 
-killall lemonbar
-$HOME/.config/lemonbar/lemonbar.sh &
+killall polybar
+polybar
 
 # Notifications
 /usr/bin/dunst &

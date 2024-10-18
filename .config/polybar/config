@@ -27,17 +27,17 @@ disabled = #707880
 
 [bar/example]
 width = 100%
-height = 24pt
-radius = 6
+height = 20pt
+radius = 3
 
 ; dpi = 96
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3pt
+line-size = 0pt
 
-border-size = 4pt
+border-size = 0pt
 border-color = #00000000
 
 padding-left = 0
@@ -51,7 +51,7 @@ separator-foreground = ${colors.disabled}
 font-0 = monospace;2
 
 modules-left = xworkspaces xwindow
-modules-right = filesystem pulseaudio wlan eth date
+modules-right = filesystem pulseaudio wlan eth battery date power
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -178,8 +178,23 @@ date-alt = %Y-%m-%d %H:%M:%S
 label = %date%
 label-foreground = ${colors.primary}
 
+[module/power]
+type = custom/text
+format = ⏻
+format-padding = 1
+click-left = $HOME/.config/polybar/power.sh
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+low-at = 10
+battery = BAT0
+adapter = ADP1
+poll-interval = 5
+
 [settings]
 screenchange-reload = true
-pseudo-transparency = true
+pseudo-transparency = false
 
 ; vim:ft=dosini
