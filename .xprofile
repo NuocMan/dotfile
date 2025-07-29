@@ -1,10 +1,24 @@
 #!/bin/sh
 
-WALLPAPER="$HOME/.wallpaper"
-[ -f "$WALLPAPER" ] && feh --bg-scale "$WALLPAPER"
-which emacs && {
-  emacs --daemon
-  export VISUAL="emacs"
+NB_MONITORS=$(xrandr --listmonitors | head -n 1 | cut -d' ' -f 2)
+
+if [ $NB_MONITORS == 1 ]; then
+  $HOME/.screenlayout/main_screen.sh
+elif [ $NB_MONITORS == 2 ]; then
+  echo "TODO: Cannot handle 2 monitors" >&2
+elif  [ $NB_MONITORS == 3 ]; then
+  $HOME/.screenlayout/triple_screen.sh
+else
+  echo "Cannot handle $NB_MONITORS monitors" >&2
+fi
+
+WALLPAPERS="$HOME/.fehbg"
+[ -f "$WALLPAPERS" ] && {
+  sh $WALLPAPERS
+}
+
+which emacsclient && {
+  export VISUAL="emacsclient"
 }
 which firefox && {
   export BROWSER="firefox"
