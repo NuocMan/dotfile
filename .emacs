@@ -53,7 +53,7 @@
   (global-set-key (kbd "C-c c") 'recompile)
 
   ;; Try to use `user-emacs-directory`
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
+  (setq backup-directory-alist '((concat user-emacs-directory "backups")))
   (setq custom-file (concat user-emacs-directory "emacs-custom.el"))
   (if (file-exists-p custom-file)
       (load custom-file)
@@ -159,11 +159,11 @@
 
 (use-package lsp-java
   :config
-  (let ((lombok-path "/home/nuocman/.emacs.d/lombok.jar"))
+  (let ((lombok-path (concat user-emacs-directory "lombok.jar")))
     (if (file-exists-p lombok-path)
         (setq lsp-java-vmargs
               (append lsp-java-vmargs
-                      (list (concat "-javaagent:" lombok-path))))
+                      (list (concat "-javaagent:" (file-truename lombok-path)))))
       (message "Lombok jar missing"))))
 
 (use-package lsp-mode
