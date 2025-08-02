@@ -96,7 +96,8 @@
 
 (use-package spacemacs-theme
   :config
-  (load-theme 'spacemacs-dark t))
+  (load-theme 'spacemacs-dark t)
+  :pin nuoc-elpa)
 
 (use-package display-line-numbers
   :ensure nil
@@ -132,7 +133,7 @@
 
 (use-package kubernetes
   :commands
-	(kubernetes-overview)
+  (kubernetes-overview)
   :config
   (setq kubernetes-poll-frequency 3600
         kubernetes-redraw-frequency 3600))
@@ -144,39 +145,85 @@
 (use-package dockerfile-mode)
 (use-package kotlin-mode)
 (use-package groovy-mode)
-(use-package gradle-mode)
+;; (use-package gradle-mode) Old AF
 
 (use-package projectile
-	:config
-	(setq projectile-mode t)
-	:bind
-	("C-c p" . projectile-command-map))
+  :config
+  (setq projectile-mode t)
+  :bind
+  ("C-c p" . projectile-command-map))
 
 (use-package which-key
-	:config
-	(which-key-mode))
+  :config
+  (which-key-mode))
 
 (use-package company
-	:hook (eglot-managed-mode . company-mode))
+  :config
+  (global-company-mode t))
+;; (eglot-managed-mode . company-mode)
 
-(use-package eglot
+(use-package lsp-mode
   :hook
-	((java-mode
-    c-mode
-    cpp-mode
-    javascript-mode) . eglot-ensure)
-  :custom
-  (eglot-autoshutdown t)
-  (eglot-events-buffer-size 0)
-  (eglot-extend-to-xref nil)
-  (eglot-ignored-server-capabilities
-   '(:hoverProvider
-     :documentHighlightProvider
-     :documentFormattingProvider
-     :documentRangeFormattingProvider
-     :documentOnTypeFormattingProvider
-     :colorProvider
-     :foldingRangeProvider)))
+  (lsp-mode . lsp-enable-which-key-integration)
+  :config
+  (setq lsp-completion-enable-additional-text-edit nil))
+
+(use-package lsp-ui)
+(use-package lsp-java
+  :config
+  (let ((lombok-path "/home/nuocman/.emacs.d/lombok.jar"))
+    (if (file-exists-p lombok-path)
+        (setq lsp-java-vmargs
+              (append lsp-java-vmargs
+                      (list (concat "-javaagent:" lombok-path))))
+      (message "Lombok jar missing")))
+  :hook
+  (java-mode . lsp)
+  (java-ts-mode . lsp))
+
+(use-package dape
+  ;; :preface
+  ;; By default dape shares the same keybinding prefix as `gud'
+  ;; If you do not want to use any prefix, set it to nil.
+  ;; (setq dape-key-prefix "\C-x\C-a")
+
+  ;; :hook
+  ;; Save breakpoints on quit
+  ;; ((kill-emacs . dape-breakpoint-save)
+  ;; Load breakpoints on startup
+  ;;  (after-init . dape-breakpoint-load))
+
+  :init
+  ;; To use window configuration like gud (gdb-mi)
+  (setq dape-buffer-window-arrangement 'gud)
+
+  :config
+  ;; Info buffers to the right
+  (setq dape-buffer-window-arrangement 'right)
+
+  ;; Global bindings for setting breakpoints with mouse
+  (dape-breakpoint-global-mode)
+
+  ;; Pulse source line (performance hit)
+  ;; (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
+
+  ;; To not display info and/or buffers on startup
+  (remove-hook 'dape-start-hook 'dape-info)
+  (remove-hook 'dape-start-hook 'dape-repl)
+
+  ;; To display info and/or repl buffers on stopped
+  (add-hook 'dape-stopped-hook 'dape-info)
+  (add-hook 'dape-stopped-hook 'dape-repl)
+
+  ;; Kill compile buffer on build success
+  (add-hook 'dape-compile-hook 'kill-buffer)
+
+  ;; Save buffers on startup, useful for interpreted languages
+  ;; (add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
+
+  ;; Projectile users
+  (setq dape-cwd-fn 'projectile-project-root)
+  )
 
 (use-package treesit-auto
   :custom
