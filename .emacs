@@ -39,6 +39,7 @@
   (setq global-hl-line-mode 1)
   (tool-bar-mode -1)
   (column-number-mode 1)
+  (ido-mode 1)
   (setq inhibit-startup-screen t)
   (setq require-final-newline 'ask)
   (setq delete-trailing-lines t)
@@ -54,7 +55,9 @@
   ;; Try to use `user-emacs-directory`
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
   (setq custom-file (concat user-emacs-directory "emacs-custom.el"))
-  (load custom-file)
+  (if (file-exists-p custom-file)
+      (load custom-file)
+      (make-empty-file custom-file))
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
   (windmove-default-keybindings 'meta))
@@ -115,27 +118,8 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package counsel
-  :after ivy
-  :config (counsel-mode))
-
 (use-package magit
   :bind ("C-x g" . magit-status))
-
-(use-package ivy
-  :defer 0.1
-  :diminish
-  :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window))
-  :custom
-  (ivy-count-format "(%d/%d) ")
-  (ivy-use-virtual-buffers t)
-  :config (ivy-mode))
-
-(use-package swiper
-  :after ivy
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
 
 (use-package kubernetes
   :commands
@@ -173,13 +157,6 @@
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
-(use-package lsp-mode
-  :hook
-  (lsp-mode . lsp-enable-which-key-integration)
-  :config
-  (setq lsp-completion-enable-additional-text-edit nil))
-
-(use-package lsp-ui)
 (use-package lsp-java
   :config
   (let ((lombok-path "/home/nuocman/.emacs.d/lombok.jar"))
@@ -187,54 +164,30 @@
         (setq lsp-java-vmargs
               (append lsp-java-vmargs
                       (list (concat "-javaagent:" lombok-path))))
-      (message "Lombok jar missing")))
-  :hook
-  (java-mode . lsp)
-  (java-ts-mode . lsp))
+      (message "Lombok jar missing"))))
 
-(use-package dape
-  ;; :preface
-  ;; By default dape shares the same keybinding prefix as `gud'
-  ;; If you do not want to use any prefix, set it to nil.
-  ;; (setq dape-key-prefix "\C-x\C-a")
-
-  ;; :hook
-  ;; Save breakpoints on quit
-  ;; ((kill-emacs . dape-breakpoint-save)
-  ;; Load breakpoints on startup
-  ;;  (after-init . dape-breakpoint-load))
-
+(use-package lsp-mode
   :init
-  ;; To use window configuration like gud (gdb-mi)
-  (setq dape-buffer-window-arrangement 'gud)
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (
+         (java-mode . lsp)
+         (java-ts-mode . lsp))
+  :commands lsp)
 
-  :config
-  ;; Info buffers to the right
-  (setq dape-buffer-window-arrangement 'right)
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+(use-package helm
+  :config (helm-mode))
+(use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
-  ;; Global bindings for setting breakpoints with mouse
-  (dape-breakpoint-global-mode)
-
-  ;; Pulse source line (performance hit)
-  ;; (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
-
-  ;; To not display info and/or buffers on startup
-  (remove-hook 'dape-start-hook 'dape-info)
-  (remove-hook 'dape-start-hook 'dape-repl)
-
-  ;; To display info and/or repl buffers on stopped
-  (add-hook 'dape-stopped-hook 'dape-info)
-  (add-hook 'dape-stopped-hook 'dape-repl)
-
-  ;; Kill compile buffer on build success
-  (add-hook 'dape-compile-hook 'kill-buffer)
-
-  ;; Save buffers on startup, useful for interpreted languages
-  ;; (add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
-
-  ;; Projectile users
-  (setq dape-cwd-fn 'projectile-project-root)
-  )
+;; optionally if you want to use debugger
+(use-package dap-mode
+  :after lsp-mode
+  :config (dap-auto-configure-mode))
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+(use-package dap-java
+  :ensure nil)
 
 (use-package treesit-auto
   :custom
@@ -242,8 +195,6 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
-
-;; (setq default-frame-alist '((font . "RobotoMono Nerd Font-9")))
 
 (defun my-suspend-frame ()
   "In a GUI environment, do nothing; otherwise `suspend-frame'."
