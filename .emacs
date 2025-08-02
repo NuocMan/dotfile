@@ -64,7 +64,12 @@
 
 (use-package whitespace
   :hook
-  (prog-mode . whitespace-mode))
+  (prog-mode . whitespace-mode)
+  :config
+  (setq whitespace-style
+        '(face trailing tabs spaces newline missing-newline-at-eof empty
+               indentation space-after-tab space-before-tab space-mark
+               tab-mark newline-mark)))
 
 (use-package fill-column-indicator
   :hook
