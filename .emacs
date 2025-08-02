@@ -54,6 +54,7 @@
   ;; Try to use `user-emacs-directory`
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
   (setq custom-file (concat user-emacs-directory "emacs-custom.el"))
+  (load custom-file)
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
   (windmove-default-keybindings 'meta))
