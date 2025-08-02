@@ -168,6 +168,11 @@
   (global-company-mode t))
 ;; (eglot-managed-mode . company-mode)
 
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
 (use-package lsp-mode
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
