@@ -39,7 +39,7 @@
   (setq global-hl-line-mode 1)
   (tool-bar-mode -1)
   (column-number-mode 1)
-  (ido-mode 1)
+  (ido-mode)
   (setq inhibit-startup-screen t)
   (setq require-final-newline 'ask)
   (setq delete-trailing-lines t)
@@ -61,6 +61,8 @@
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
   (windmove-default-keybindings 'meta))
+
+(add-to-list 'default-frame-alist '(undecorated . t))
 
 (use-package editorconfig
   :ensure editorconfig
@@ -184,7 +186,10 @@
 ;; optionally if you want to use debugger
 (use-package dap-mode
   :after lsp-mode
-  :config (dap-auto-configure-mode))
+  :hook (
+         (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra))))
+  :config
+  (dap-auto-configure-mode))
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
 (use-package dap-java
   :ensure nil)
